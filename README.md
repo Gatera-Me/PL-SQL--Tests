@@ -1,5 +1,84 @@
 # PL-SQL--Tests
-This repository includes relational database schemas, optimized SQL queries, and stored procedures to streamline project workflows and ensure data consistency. Warm Welcome!!!
+This repository includes relational database schemas, optimized SQL queries, and stored procedures to Project Management System. Warm Welcome!!!
+
+ README FILE
+
+ 1. Problem Statement
+
+This is a project management database system that helps manage employees, projects, and tasks in an organisation. The database allows me to track departments, assign employees to different projects with specific roles, and monitor tasks related to those projects. The system ensures that I can easily view which employees are working on what projects and the progress of the tasks they’re responsible for. This kind of system is particularly useful for any organization looking to keep track of multiple projects, assign roles efficiently, and manage deadlines.
+
+
+ 2. Description of SQL Commands Executed
+
+- Table Creation:
+  I created several tables to organise the data related to departments, employees, projects, and tasks:
+  
+   `Departments`: This table stores department information such as the department’s ID, name, and location. For example, I added a department called "Engineering" located in San Francisco.
+ 
+  `Employees`: This table holds employee information like their name, role, email, phone number, and the department they work in. For example, I added an employee named Jean-Pierre Nkurunziza, who works as an engineer in the Engineering department.
+
+ `Projects`: This table stores information about the different projects, including their name, start and end dates, and current status. For instance, I added a project called "Ubumenyi bw Ikoranabuhanga" which is currently in progress.
+
+ `Tasks`: I also created a table for tasks, where I can record each task's title, due date, and status. For example, one task I added is "Kwagura Ubushobozi" with a due date of December 15, 2020, and its status set as "Pending."
+
+ `Project_Employee`: This table links employees to the projects they’re working on and specifies their roles in each project. For example, Alice Niyonsaba is the "Project Manager" for the "Gahunda yIterambere" project.
+ `Project_Task`: This table links tasks to the projects they belong to. For instance, I assigned the "Guteza imbere amashuri" task to the "Gahunda yIterambere" project.
+
+- Inserting Data:
+
+Ex;  INSERT INTO Employees (EmployeeID, Name, Role, Email, PhoneNumber, DepartmentID)
+  VALUES (2, 'Jean-Pierre Nkurunziza', 'Engineer', 'jean.nkurunziza@yahoo.com', '+250788234567', 2);
+
+
+  
+- Updating Data:
+
+  I used an `UPDATE` statement to modify the role of Alice Niyonsaba from "Project Manager" to "Lead of Program" in the "Gahunda yIterambere" project. This allows me to easily update responsibilities within a project.
+
+- Deleting Data:
+  I deleted Alice's assignment from the "Gahunda yIterambere" project when her role changed, using a `DELETE` statement:
+  Ex: DELETE FROM Project_Employee WHERE ProjectID = 1 AND EmployeeID = 1;
+
+- Selecting Data:
+  
+Used several `SELECT` queries to retrieve meaningful information:
+  - For example,
+  SELECT * FROM Tasks WHERE TaskID = 3;
+  - I also retrieved a list of employees and their roles in specific projects:
+Ex;  SELECT Projects.Name AS ProjectName, Employees.Name AS EmployeeName, Project_Employee.RoleInProject
+  FROM Projects
+  JOIN Project_Employee ON Projects.ProjectID = Project_Employee.ProjectID
+  JOIN Employees ON Project_Employee.EmployeeID = Employees.EmployeeID;
+  
+
+- Alter:
+
+  I added a `Gender` column to the `Employees` table in case I need to store that information in the future:
+ Ex:  ALTER TABLE Employees ADD Gender VARCHAR(10);
+
+- Transaction:
+  I created a new user and granted them permission to select data from the `Employees` table:
+Ex;  GRANT SELECT ON Employees TO user_name;
+   This ensures that a specific user can view employee data but not make any changes.
+
+3. Explanations of Results and Transactions
+
+- Query Results:
+  For example, when I queried the `Projects`, `Employees`, and `Project_Employee` tables, I could see which employees were assigned to specific projects and their roles. This helps me keep track of team assignments:
+  ```sql
+  SELECT Projects.Name AS ProjectName, Employees.Name AS EmployeeName, Project_Employee.RoleInProject
+  FROM Projects
+  JOIN Project_Employee ON Projects.ProjectID = Project_Employee.ProjectID
+  JOIN Employees ON Project_Employee.EmployeeID = Employees.EmployeeID;
+  ```
+
+- Transactions:
+  After updating or deleting data, I used `COMMIT` to finalize my changes. This ensures that the database remains consistent and that changes are saved permanently:
+  ```sql
+  COMMIT;
+
+  ```
+QUERIES
 
 CREATE TABLE Departments (
     DepartmentID INT PRIMARY KEY,
@@ -134,5 +213,7 @@ GRANT SELECT ON Employees TO user_name;
 Commit;
 
 
-![Screenshot (4)](https://github.com/user-attachments/assets/1e66adb4-964a-4892-8f30-b91882de1b2d)
+
+
+
 
